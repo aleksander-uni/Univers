@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Інтернет-магазин</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Smart Shop</h1>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 <span id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="products-grid" id="products">
+            <!-- Products will be added here dynamically -->
+        </div>
+
+        <div class="cart-modal" id="cart-modal">
+            <div class="cart-content">
+                <h2>Кошик</h2>
+                <div id="cart-items">
+                    <!-- Cart items will be added here -->
+                </div>
+                <div class="cart-total">
+                    <h3>Загальна сума: <span id="cart-total">0</span> грн</h3>
+                </div>
+                <button class="close-cart" onclick="toggleCart()">Закрити</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
