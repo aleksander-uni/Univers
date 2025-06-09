@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Таблиця оцінок студентів</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #aaa; padding: 8px; text-align: center; }
+    th { background: #f0f0f0; }
+    input[type="text"], input[type="number"] { width: 90%; }
+    .btn { padding: 4px 10px; margin: 2px; cursor: pointer; }
+    .btn-add { background: #4caf50; color: #fff; border: none; }
+    .btn-del { background: #f44336; color: #fff; border: none; }
+    .btn-edit { background: #2196f3; color: #fff; border: none; }
+    .btn-save { background: #ff9800; color: #fff; border: none; }
+  </style>
+</head>
+<body>
+  <h2>Таблиця оцінок студентів</h2>
+  <table id="gradesTable">
+    <thead>
+      <tr>
+        <th>ПІБ</th>
+        <th>Математика</th>
+        <th>Фізика</th>
+        <th>Інформатика</th>
+        <th>Дії</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Шплецер Олександр</td>
+        <td>90</td>
+        <td>85</td>
+        <td>95</td>
+        <td>
+          <button class="btn btn-edit" onclick="editRow(this)">Редагувати</button>
+          <button class="btn btn-del" onclick="deleteRow(this)">Видалити</button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><input type="text" id="newName" placeholder="ПІБ"></td>
+        <td><input type="number" id="newMath" min="0" max="100" placeholder="0-100"></td>
+        <td><input type="number" id="newPhys" min="0" max="100" placeholder="0-100"></td>
+        <td><input type="number" id="newInf" min="0" max="100" placeholder="0-100"></td>
+        <td><button class="btn btn-add" onclick="addRow()">Додати</button></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <script>
+    function addRow() {
+      const name = document.getElementById('newName').value.trim();
+      const math = document.getElementById('newMath').value;
+      const phys = document.getElementById('newPhys').value;
+      const inf = document.getElementById('newInf').value;
+      if (!name || math === "" || phys === "" || inf === "") {
+        alert('Будь ласка, заповніть всі поля!');
+        return;
+      }
+      const tbody = document.querySelector('#gradesTable tbody');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${name}</td>
+        <td>${math}</td>
+        <td>${phys}</td>
+        <td>${inf}</td>
+        <td>
+          <button class="btn btn-edit" onclick="editRow(this)">Редагувати</button>
+          <button class="btn btn-del" onclick="deleteRow(this)">Видалити</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+      document.getElementById('newName').value = '';
+      document.getElementById('newMath').value = '';
+      document.getElementById('newPhys').value = '';
+      document.getElementById('newInf').value = '';
+    }
+
+    function deleteRow(btn) {
+      if (confirm('Видалити цей рядок?')) {
+        btn.closest('tr').remove();
+      }
+    }
+
+    function editRow(btn) {
+      const row = btn.closest('tr');
+      if (btn.textContent === 'Редагувати') {
+        for (let i = 0; i < 4; i++) {
+          const cell = row.cells[i];
+          const value = cell.textContent;
+          cell.innerHTML = i === 0
+            ? `<input type="text" value="${value}">`
+            : `<input type="number" min="0" max="100" value="${value}">`;
+        }
+        btn.textContent = 'Зберегти';
+        btn.className = 'btn btn-save';
+      } else {
+        for (let i = 0; i < 4; i++) {
+          const input = row.cells[i].querySelector('input');
+          row.cells[i].textContent = input.value;
+        }
+        btn.textContent = 'Редагувати';
+        btn.className = 'btn btn-edit';
+      }
+    }
+  </script>
+</body>
+</html>
